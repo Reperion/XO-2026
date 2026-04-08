@@ -14,7 +14,15 @@
 
 | # | Project | Status | Notes |
 |---|---------|--------|-------|
-| — | None yet | — | First project: tomorrow morning |
+| 1 | Hermes Dashboard | COMPLETE | Web dashboard at /home/lucid/xo/hermes-dashboard/. Build passes. 5 pages: /, /sessions, /sessions/[id], /tools, /jobs. API routes all working. 23 sessions, 905 messages, 383 tool calls in DB. Dev server: npm run dev. |
+
+## Implemented Skills This Session
+
+| Skill | Created |
+|-------|---------|
+| github-auth-check | 2026-04-08 |
+| xo-autonomous-operation | 2026-04-08 |
+| hermes-dashboard-build | 2026-04-08 |
 
 ## Completed Projects
 
