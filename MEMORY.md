@@ -34,7 +34,9 @@ Mike communicates in clear flowing prose, no markdown tables. He expects me to e
 
 He will provide initial pointers (not exhaustive instructions) and expects me to extend them independently.
 
-**Telegram:** @LuCiDDreAMs2026 (chat ID: 8550634232)
+**Telegram:** @LuCiDDreAMs2026 (chat_id: 8550634232)
+
+**Documentation style:** Mike wants docs in .md files with emoji, color (HTML spans), tables, and mermaid diagrams when useful. Clean and readable, not boring.
 
 ---
 

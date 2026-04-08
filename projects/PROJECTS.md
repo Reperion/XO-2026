@@ -15,6 +15,7 @@
 | # | Project | Status | Notes |
 |---|---------|--------|-------|
 | 1 | Hermes Dashboard | COMPLETE | Web dashboard at /home/lucid/xo/hermes-dashboard/. Build passes. 5 pages: /, /sessions, /sessions/[id], /tools, /jobs. API routes all working. 23 sessions, 905 messages, 383 tool calls in DB. Dev server: npm run dev. |
+| 2 | Skills & Tools Inventory | IN PROGRESS | 77 skills across 18 categories. Document at /home/lucid/xo/skills-inventory.md. Work through one by one. |
 
 ## Implemented Skills This Session
 
