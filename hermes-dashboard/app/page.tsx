@@ -4,28 +4,48 @@ import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import StatCard from '@/components/ui/StatCard';
 import SessionRow from '@/components/ui/SessionRow';
+import ChartsGrid from '@/components/charts/ChartsGrid';
 import type { Session, SessionStats, SearchHit } from '@/lib/types';
+import type { FC } from 'react';
 import { formatNumber, formatCost } from '@/lib/utils';
+
+interface ToolData {
+  name: string;
+  calls: number;
+}
+
+interface DailyData {
+  date: string;
+  sessions: number;
+}
 
 export default function DashboardPage() {
   const [stats, setStats] = useState<SessionStats | null>(null);
+  const [toolData, setToolData] = useState<ToolData[]>([]);
+  const [dailyData, setDailyData] = useState<DailyData[]>([]);
   const [recent, setRecent] = useState<Session[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchHit[]>([]);
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | undefined>();
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | undefined>();;
 
   useEffect(() => {
     async function load() {
       try {
-        const [statsRes, sessionsRes] = await Promise.all([
+        const [statsRes, toolsRes, dailyRes, sessionsRes] = await Promise.all([
           fetch('/api/stats'),
+          fetch('/api/tools'),
+          fetch('/api/sessions-daily'),
           fetch('/api/sessions?limit=10'),
         ]);
-        if (!statsRes.ok || !sessionsRes.ok) throw new Error('API error');
+        if (!statsRes.ok || !toolsRes.ok || !dailyRes.ok || !sessionsRes.ok) throw new Error('API error');
         const statsData = await statsRes.json();
+        const toolData_ = await toolsRes.json();
+        const dailyData_ = await dailyRes.json();
         const sessionsData = await sessionsRes.json();
         setStats(statsData);
+        setToolData(toolData_);
+        setDailyData(dailyData_);
         setRecent(sessionsData.sessions);
       } catch {
         setError('Failed to load dashboard data');
@@ -108,6 +128,14 @@ export default function DashboardPage() {
         <StatCard label="Sessions Today" value={formatNumber(stats?.sessions_today ?? 0)} />
         <StatCard label="Msgs Today" value={formatNumber(stats?.messages_today ?? 0)} />
       </div>
+
+      {stats && (
+        <ChartsGrid 
+          stats={stats} 
+          toolData={toolData} 
+          dailyData={dailyData} 
+        />
+      )}
 
       <div className="mt-8">
         <div className="flex justify-between items-center mb-4">

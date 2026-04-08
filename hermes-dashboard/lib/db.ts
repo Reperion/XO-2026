@@ -150,7 +150,7 @@ export function getRecentSessions(limit = 10): Session[] {
 }
 
 export function getSessionsByDate(date: string): Session[] {
-  // date format: YYYY-MM-DD
+  // date format YYYY-MM-DD
   const startOfDay = new Date(date + 'T00:00:00.000Z').getTime() / 1000;
   const endOfDay = startOfDay + 86400;
 
@@ -160,6 +160,31 @@ export function getSessionsByDate(date: string): Session[] {
     ORDER BY started_at DESC
   `);
   return stmt.all(startOfDay, endOfDay) as Session[];
+}
+
+export function getTopTools(limit = 8): {name: string; calls: number}[] {
+  const stmt = getDb().prepare(`
+    SELECT tool_name, COUNT(*) as call_count 
+    FROM messages 
+    WHERE tool_name IS NOT NULL 
+    GROUP BY tool_name 
+    ORDER BY call_count DESC 
+    LIMIT ?
+  `);
+  return stmt.all(limit).map((t: any) => ({ name: t.tool_name, calls: t.call_count }));
+}
+
+export function getSessionsDaily(days = 30): {date: string; sessions: number}[] {
+  const stmt = getDb().prepare(`
+    SELECT 
+      strftime('%Y-%m-%d', datetime(started_at / 1000, 'unixepoch')) as date,
+      COUNT(*) as sessions 
+    FROM sessions 
+    WHERE started_at >= (strftime('%s', 'now', '-? days') * 1000)
+    GROUP BY date 
+    ORDER BY date ASC
+  `);
+  return stmt.all(days).map((r: any) => ({ date: r.date, sessions: r.sessions }));
 }
 
 export function searchGlobal(query: string, limit = 50): SearchHit[] {
