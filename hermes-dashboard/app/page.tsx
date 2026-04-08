@@ -1,16 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import StatCard from '@/components/ui/StatCard';
 import SessionRow from '@/components/ui/SessionRow';
-import type { Session, SessionStats } from '@/lib/types';
+import type { Session, SessionStats, SearchHit } from '@/lib/types';
 import { formatNumber, formatCost } from '@/lib/utils';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState<SessionStats | null>(null);
   const [recent, setRecent] = useState<Session[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<SearchHit[]>([]);
+  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | undefined>();
 
   useEffect(() => {
     async function load() {
@@ -33,6 +36,27 @@ export default function DashboardPage() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleSearch = useCallback(async (q: string) => {
+    if (!q.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const res = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setSearchResults(data);
+      }
+    } catch {}
+  }, []);
+
+  useEffect(() => {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    const timer = setTimeout(() => handleSearch(searchQuery), 300);
+    setDebounceTimer(timer as NodeJS.Timeout);
+    return () => clearTimeout(timer);
+  }, [searchQuery, handleSearch, debounceTimer]);
+
   if (error) {
     return <div className="text-[var(--error)]">{error}</div>;
   }
@@ -41,7 +65,40 @@ export default function DashboardPage() {
     <div>
       <h1 className="text-2xl font-semibold mb-6">Hermes Overview</h1>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mb-8">
+      <div className="mb-8">
+        <input
+          type="search"
+          placeholder="Search messages, sessions, tools, jobs..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 md:max-w-2xl"
+        />
+      </div>
+
+      {searchResults.length > 0 && (
+        <div className="mb-8 space-y-2 max-h-96 overflow-y-auto">
+          {searchResults.map((hit, idx) => (
+            <details key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg">
+              <summary className="p-4 cursor-pointer list-none bg-gradient-to-r from-gray-50 to-gray-100 font-medium hover:bg-gray-100 flex items-center">
+                <span className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${hit.type === 'message' ? 'bg-blue-500' : hit.type === 'session' ? 'bg-green-500' : 'bg-purple-500'}`} />
+                {hit.preview}
+                <span className="ml-auto text-xs text-gray-500">{new Date(hit.timestamp * 1000).toLocaleDateString()}</span>
+              </summary>
+              <div className="p-4 pt-0 bg-gray-50 text-sm">
+                {hit.snippet && hit.snippet !== hit.preview && <p>{hit.snippet}</p>}
+                <Link
+                  href={`/sessions/${hit.session_id}`}
+                  className="text-blue-600 hover:underline text-xs mt-2 inline-block"
+                >
+                  View in session →
+                </Link>
+              </div>
+            </details>
+          ))}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mb-8">
         <StatCard label="Total Sessions" value={formatNumber(stats?.total_sessions ?? 0)} />
         <StatCard label="Total Messages" value={formatNumber(stats?.total_messages ?? 0)} />
         <StatCard label="Total Tool Calls" value={formatNumber(stats?.total_tool_calls ?? 0)} />

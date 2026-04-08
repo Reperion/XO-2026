@@ -1,0 +1,153 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DashboardPage > renders dashboard 1`] = `
+<div>
+  <div>
+    <h1
+      class="text-2xl font-semibold mb-6"
+    >
+      Hermes Overview
+    </h1>
+    <div
+      class="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mb-8"
+    >
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Total Sessions
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Total Messages
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Total Tool Calls
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Input Tokens
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Output Tokens
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Est. Cost
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Sessions Today
+        </div>
+      </div>
+      <div
+        class="bg-[var(--card)] border-[1px_solid_var(--border)] rounded-[0.75rem] p-[1.25rem]"
+      >
+        <div
+          class="[font-size:2rem] font-bold [font-variant-numeric:tabular-nums]"
+        >
+          —
+        </div>
+        <div
+          class="text-[0.875rem] text-[var(--muted)] mt-[0.25rem]"
+        >
+          Msgs Today
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-8"
+    >
+      <div
+        class="flex justify-between items-center mb-4"
+      >
+        <h2
+          class="text-xl font-semibold"
+        >
+          Recent Sessions
+        </h2>
+        <a
+          class="text-sm hover:text-accent-hover"
+          href="/sessions"
+        >
+          View all →
+        </a>
+      </div>
+      <div
+        class="text-muted-foreground"
+      >
+        No sessions yet
+      </div>
+    </div>
+  </div>
+</div>
+`;

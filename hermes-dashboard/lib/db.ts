@@ -1,7 +1,6 @@
-// Hermes Dashboard — Database Wrapper
 import Database from 'better-sqlite3';
 import path from 'path';
-import type { Session, Message, SessionStats, ToolUsage } from './types';
+import type { Session, Message, SessionStats, ToolUsage, SearchHit } from './types';
 
 const DB_PATH = path.join(process.env.HOME || '/home/lucid', '.hermes/state.db');
 
@@ -161,4 +160,77 @@ export function getSessionsByDate(date: string): Session[] {
     ORDER BY started_at DESC
   `);
   return stmt.all(startOfDay, endOfDay) as Session[];
+}
+
+export function searchGlobal(query: string, limit = 50): SearchHit[] {
+  const db = getDb();
+  const results: SearchHit[] = [];
+
+  // Messages FTS
+  let msgStmt;
+  try {
+    msgStmt = db.prepare(`
+      SELECT m.*, rank AS score FROM messages_fts fts
+      JOIN messages m ON m.id = fts.rowid
+      WHERE messages_fts MATCH ?
+      ORDER BY rank
+      LIMIT ?
+    `);
+    const msgs = msgStmt.all(query + '*', Math.floor(limit / 3)) as (Message & {score: number})[];
+    for (const m of msgs) {
+      results.push({
+        type: 'message' as const,
+        id: m.id.toString(),
+        preview: m.content?.slice(0, 100) || '',
+        snippet: m.content?.slice(0, 200) || '',
+        session_id: m.session_id,
+        timestamp: m.timestamp,
+        score: m.score,
+      });
+    }
+  } catch {}
+
+  // Sessions LIKE title/source
+  const sesStmt = db.prepare(`
+    SELECT *, 0 as score FROM sessions
+    WHERE title LIKE ? OR source LIKE ?
+    ORDER BY started_at DESC
+    LIMIT ?
+  `);
+  const sessions = sesStmt.all(`%${query}%`, `%${query}%`, Math.floor(limit / 3)) as (Session & {score: number})[];
+  for (const s of sessions) {
+    results.push({
+      type: 'session' as const,
+      id: s.id,
+      preview: s.title || s.source || 'Session',
+      snippet: s.title || undefined,
+      session_id: s.id,
+      timestamp: s.started_at,
+      score: s.score,
+    });
+  }
+
+  // Tool calls LIKE in tool_calls
+  const toolStmt = db.prepare(`
+    SELECT *, 0 as score FROM messages
+    WHERE tool_calls LIKE ?
+    ORDER BY timestamp DESC
+    LIMIT ?
+  `);
+  const tools = toolStmt.all(`%${query}%`, Math.floor(limit / 3)) as (Message & {score: number})[];
+  for (const t of tools) {
+    results.push({
+      type: 'tool_call' as const,
+      id: t.tool_call_id || t.id.toString(),
+      preview: t.tool_name || 'Tool call',
+      snippet: t.tool_calls?.slice(0, 200) || '',
+      session_id: t.session_id,
+      timestamp: t.timestamp,
+      score: t.score,
+    });
+  }
+
+  // Sort by score desc, then timestamp desc, limit
+  results.sort((a, b) => (b.score || 0) - (a.score || 0) || b.timestamp - a.timestamp);
+  return results.slice(0, limit);
 }
