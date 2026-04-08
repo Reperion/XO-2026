@@ -1,6 +1,8 @@
 #!/bin/bash
 # XO-2026 Sync Script — Pushes local workspace state to GitHub
 # Run from /home/lucid/xo/
+# Ensure git credential helper is set:
+#   git config --global credential.helper "/usr/bin/gh auth git-credential"
 
 GIT_DIR="/home/lucid/xo"
 REMOTE="origin"
