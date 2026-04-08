@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const tools = getToolUsage();
     return NextResponse.json({ tools });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch tools' }, { status: 500 });
   }
 }

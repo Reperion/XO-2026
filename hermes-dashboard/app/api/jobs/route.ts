@@ -33,7 +33,7 @@ export async function GET() {
       paused_reason: j.paused_reason,
     }));
     return NextResponse.json({ jobs });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ jobs: [], error: 'Failed to read jobs' }, { status: 500 });
   }
 }

@@ -12,7 +12,7 @@ export async function GET(
   try {
     const messages = getMessagesBySession(id);
     return NextResponse.json({ messages });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch messages' }, { status: 500 });
   }
 }

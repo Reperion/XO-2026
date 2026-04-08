@@ -1,36 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import StatCard from '@/components/ui/StatCard';
+import SessionRow from '@/components/ui/SessionRow';
 import type { Session, SessionStats } from '@/lib/types';
-
-function formatNumber(n: number | null): string {
-  if (n === null || n === 0) return '—';
-  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'M';
-  if (n >= 1_000) return (n / 1_000).toFixed(1) + 'K';
-  return n.toString();
-}
-
-function formatCost(n: number | null): string {
-  if (n === null) return '—';
-  return '$' + n.toFixed(4);
-}
-
-function timeAgo(ts: number): string {
-  const seconds = Math.floor(Date.now() / 1000 - ts);
-  if (seconds < 60) return `${seconds}s ago`;
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  return `${Math.floor(seconds / 86400)}d ago`;
-}
-
-function StatCard({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="stat-card">
-      <div className="stat-value">{value}</div>
-      <div className="stat-label">{label}</div>
-    </div>
-  );
-}
+import { formatNumber, formatCost } from '@/lib/utils';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState<SessionStats | null>(null);
@@ -49,7 +24,7 @@ export default function DashboardPage() {
         const sessionsData = await sessionsRes.json();
         setStats(statsData);
         setRecent(sessionsData.sessions);
-      } catch (e) {
+      } catch {
         setError('Failed to load dashboard data');
       }
     }
@@ -59,17 +34,14 @@ export default function DashboardPage() {
   }, []);
 
   if (error) {
-    return <div style={{ color: 'var(--error)' }}>{error}</div>;
+    return <div className="text-[var(--error)]">{error}</div>;
   }
 
   return (
     <div>
-      <h1 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '1.5rem' }}>
-        Hermes Overview
-      </h1>
+      <h1 className="text-2xl font-semibold mb-6">Hermes Overview</h1>
 
-      {/* Stat cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(160px,1fr))] gap-4 mb-8">
         <StatCard label="Total Sessions" value={formatNumber(stats?.total_sessions ?? 0)} />
         <StatCard label="Total Messages" value={formatNumber(stats?.total_messages ?? 0)} />
         <StatCard label="Total Tool Calls" value={formatNumber(stats?.total_tool_calls ?? 0)} />
@@ -80,43 +52,18 @@ export default function DashboardPage() {
         <StatCard label="Msgs Today" value={formatNumber(stats?.messages_today ?? 0)} />
       </div>
 
-      {/* Recent sessions */}
-      <div style={{ marginTop: '2rem' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <h2 style={{ fontSize: '1.125rem', fontWeight: 600 }}>Recent Sessions</h2>
-          <a href="/sessions" style={{ fontSize: '0.875rem' }}>View all →</a>
+      <div className="mt-8">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Recent Sessions</h2>
+          <Link href="/sessions" className="text-sm hover:text-accent-hover">View all →</Link>
         </div>
 
         {recent.length === 0 ? (
-          <div style={{ color: 'var(--muted)' }}>No sessions yet</div>
+          <div className="text-muted-foreground">No sessions yet</div>
         ) : (
-          <div>
-            {recent.map((session) => (
-              <a
-                key={session.id}
-                href={`/sessions/${session.id}`}
-                className="session-row"
-                style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
-              >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <div style={{ fontWeight: 500, fontSize: '0.9rem' }}>
-                      {session.title || session.id}
-                    </div>
-                    <div style={{ color: 'var(--muted)', fontSize: '0.75rem', marginTop: '0.25rem' }}>
-                      {session.source} · {session.model?.split('/')[1] || session.model || 'unknown'}
-                    </div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div className="time-ago">{timeAgo(session.started_at)}</div>
-                    <div style={{ color: 'var(--muted)', fontSize: '0.75rem', marginTop: '0.25rem' }}>
-                      {session.message_count} msgs · {session.tool_call_count} tools
-                    </div>
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
+          recent.map((session) => (
+            <SessionRow key={session.id} session={session} />
+          ))
         )}
       </div>
     </div>

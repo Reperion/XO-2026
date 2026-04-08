@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import type { Session, Message } from '@/lib/types';
 
 function formatTimestamp(ts: number): string {
@@ -20,26 +21,18 @@ function parseToolCalls(json: string | null): Array<{ id: string; type: string; 
 function ToolCallView({ toolCalls }: { toolCalls: string | null }) {
   const calls = parseToolCalls(toolCalls);
   if (calls.length === 0) return null;
-
   return (
-    <div style={{ marginTop: '0.5rem' }}>
+    <div className="mt-2">
       {calls.map((call, i) => (
-        <div key={i} style={{ marginBottom: '0.5rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-            <span style={{
-              background: 'var(--success)',
-              color: 'white',
-              fontSize: '0.7rem',
-              padding: '0.1rem 0.4rem',
-              borderRadius: '0.25rem',
-              fontWeight: 600,
-            }}>
+        <div key={i} className="mb-2">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="bg-[var(--success)] text-white text-xs px-1 py-px rounded font-semibold">
               TOOL
             </span>
-            <span style={{ fontWeight: 600, fontSize: '0.85rem' }}>{call.name || 'unknown'}</span>
+            <span className="font-semibold text-sm">{call.name || 'unknown'}</span>
           </div>
           {call.arguments ? (
-            <pre className="json-viewer" style={{ fontSize: '0.75rem' }}>
+            <pre className="json-viewer text-xs">
               {JSON.stringify(call.arguments, null, 2)}
             </pre>
           ) : null}
@@ -50,31 +43,26 @@ function ToolCallView({ toolCalls }: { toolCalls: string | null }) {
 }
 
 function MessageRow({ message }: { message: Message }) {
-  const roleClass = message.role === 'user' ? 'message-user' :
-                    message.tool_name ? 'message-tool' : 'message-assistant';
-
+  const roleClass = message.role === 'user' ? 'message-user' : message.role === 'tool' ? 'message-tool' : 'message-assistant';
   return (
-    <div className={roleClass} style={{ borderRadius: '0.5rem', padding: '1rem', marginBottom: '0.75rem' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-        <span style={{ fontWeight: 600, fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+    <div className={`${roleClass} rounded-lg p-4 mb-3`}>
+      <div className="flex justify-between items-center mb-2">
+        <span className="font-semibold text-sm uppercase tracking-wider">
           {message.role === 'tool' ? `tool: ${message.tool_name}` : message.role}
         </span>
-        <span style={{ color: 'var(--muted)', fontSize: '0.75rem' }}>
+        <span className="text-[var(--muted)] text-xs">
           {formatTimestamp(message.timestamp)}
           {message.token_count && ` · ${message.token_count} tokens`}
         </span>
       </div>
-
       {message.content && (
-        <div style={{ fontSize: '0.9rem', lineHeight: 1.6, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+        <div className="text-sm leading-relaxed whitespace-pre-wrap break-words">
           {message.content.length > 2000 ? message.content.slice(0, 2000) + '...' : message.content}
         </div>
       )}
-
       <ToolCallView toolCalls={message.tool_calls} />
-
       {message.finish_reason && (
-        <div style={{ color: 'var(--muted)', fontSize: '0.7rem', marginTop: '0.5rem' }}>
+        <div className="text-[var(--muted)] text-xs mt-2">
           finish_reason: {message.finish_reason}
         </div>
       )}
@@ -95,7 +83,6 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
 
   useEffect(() => {
     if (!sessionId) return;
-
     async function load() {
       try {
         const [sessionRes, messagesRes] = await Promise.all([
@@ -107,7 +94,7 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
         const messagesData = await messagesRes.json();
         setSession(sessionData);
         setMessages(messagesData.messages);
-      } catch (e) {
+      } catch {
         setError('Failed to load session');
       } finally {
         setLoading(false);
@@ -116,40 +103,35 @@ export default function SessionDetailPage({ params }: { params: Promise<{ id: st
     load();
   }, [sessionId]);
 
-  if (loading) return <div style={{ color: 'var(--muted)' }}>Loading session...</div>;
-  if (error || !session) return <div style={{ color: 'var(--error)' }}>{error || 'Session not found'}</div>;
+  if (loading) return <div className="text-[var(--muted)]">Loading session...</div>;
+  if (error || !session) return <div className="text-[var(--error)]">{error || 'Session not found'}</div>;
 
   return (
     <div>
-      {/* Header */}
-      <div style={{ marginBottom: '1.5rem' }}>
-        <a href="/sessions" style={{ fontSize: '0.875rem', color: 'var(--muted)' }}>← Back to Sessions</a>
-        <h1 style={{ fontSize: '1.25rem', fontWeight: 600, marginTop: '0.5rem' }}>
+      <div className="mb-6">
+        <Link href="/sessions" className="text-sm text-[var(--muted)]">← Back to Sessions</Link>
+        <h1 className="text-lg font-semibold mt-2">
           {session.title || session.id}
         </h1>
-        <div style={{ color: 'var(--muted)', fontSize: '0.8rem', marginTop: '0.25rem' }}>
+        <div className="text-[var(--muted)] text-xs mt-1">
           {session.source} · {session.model} · {formatTimestamp(session.started_at)}
           {session.ended_at && ` — ${formatTimestamp(session.ended_at)}`}
           {session.end_reason && ` · ${session.end_reason}`}
         </div>
       </div>
-
-      {/* Stats row */}
-      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+      <div className="flex gap-4 mb-6 flex-wrap">
         <span className="tool-badge">{session.message_count} messages</span>
-        <span className="tool-badge" style={{ background: 'var(--success)' }}>{session.tool_call_count} tool calls</span>
-        <span className="tool-badge" style={{ background: 'var(--muted)' }}>{session.input_tokens.toLocaleString()} in tokens</span>
-        <span className="tool-badge" style={{ background: 'var(--muted)' }}>{session.output_tokens.toLocaleString()} out tokens</span>
+        <span className="tool-badge bg-[var(--success)]">{session.tool_call_count} tool calls</span>
+        <span className="tool-badge bg-[var(--muted)]">{session.input_tokens.toLocaleString()} in tokens</span>
+        <span className="tool-badge bg-[var(--muted)]">{session.output_tokens.toLocaleString()} out tokens</span>
         {session.actual_cost_usd !== null && (
-          <span className="tool-badge" style={{ background: 'var(--warning)' }}>
+          <span className="tool-badge bg-[var(--warning)]">
             ${session.actual_cost_usd.toFixed(4)}
           </span>
         )}
       </div>
-
-      {/* Messages */}
       <div>
-        <h2 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '1rem', color: 'var(--muted)' }}>
+        <h2 className="text-base font-semibold mb-4 text-[var(--muted)]">
           Conversation ({messages.length} messages)
         </h2>
         {messages.map((msg) => (

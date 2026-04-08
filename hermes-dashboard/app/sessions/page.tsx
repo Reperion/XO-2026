@@ -1,19 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import SessionRow from '@/components/ui/SessionRow';
 import type { Session } from '@/lib/types';
-
-function timeAgo(ts: number): string {
-  const seconds = Math.floor(Date.now() / 1000 - ts);
-  if (seconds < 60) return `${seconds}s ago`;
-  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-  return `${Math.floor(seconds / 86400)}d ago`;
-}
-
-function formatDate(ts: number): string {
-  return new Date(ts * 1000).toLocaleString();
-}
 
 export default function SessionsPage() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -42,76 +31,37 @@ export default function SessionsPage() {
       s.id.toLowerCase().includes(q) ||
       s.title?.toLowerCase().includes(q) ||
       s.source.toLowerCase().includes(q) ||
-      s.model?.toLowerCase().includes(q) ||
-      ''
+      s.model?.toLowerCase().includes(q)
     );
   });
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 600 }}>Sessions</h1>
-        <span style={{ color: 'var(--muted)', fontSize: '0.875rem' }}>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-semibold">Sessions</h1>
+        <span className="text-sm text-muted-foreground">
           {sessions.length} total
         </span>
       </div>
 
-      {/* Search */}
-      <div style={{ marginBottom: '1rem' }}>
+      <div className="mb-4">
         <input
           type="text"
           placeholder="Search sessions..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          style={{
-            background: 'var(--card)',
-            border: '1px solid var(--border)',
-            borderRadius: '0.5rem',
-            padding: '0.5rem 1rem',
-            color: 'var(--foreground)',
-            width: '100%',
-            maxWidth: '400px',
-          }}
+          className="w-full max-w-md bg-card border border-border rounded-lg px-4 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
 
       {loading ? (
-        <div style={{ color: 'var(--muted)' }}>Loading sessions...</div>
+        <div className="text-muted-foreground">Loading sessions...</div>
       ) : filtered.length === 0 ? (
-        <div style={{ color: 'var(--muted)' }}>No sessions found</div>
+        <div className="text-muted-foreground">No sessions found</div>
       ) : (
-        <div>
-          {filtered.map((session) => (
-            <a
-              key={session.id}
-              href={`/sessions/${session.id}`}
-              className="session-row"
-              style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem' }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 500, fontSize: '0.9rem', marginBottom: '0.25rem' }}>
-                    {session.title || <span style={{ color: 'var(--muted)', fontFamily: 'monospace', fontSize: '0.8rem' }}>{session.id}</span>}
-                  </div>
-                  <div style={{ color: 'var(--muted)', fontSize: '0.75rem' }}>
-                    {formatDate(session.started_at)} · {session.source} · {session.model?.split('/')[1] || session.model}
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div className="time-ago">{timeAgo(session.started_at)}</div>
-                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.25rem', justifyContent: 'flex-end' }}>
-                    <span className="tool-badge">{session.message_count} msgs</span>
-                    {session.tool_call_count > 0 && (
-                      <span className="tool-badge" style={{ background: 'var(--success)' }}>
-                        {session.tool_call_count} tools
-                      </span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
+        filtered.map((session) => (
+          <SessionRow key={session.id} session={session} />
+        ))
       )}
     </div>
   );

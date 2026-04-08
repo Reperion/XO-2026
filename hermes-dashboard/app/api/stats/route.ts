@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const stats = getSessionStats();
     return NextResponse.json(stats);
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 });
   }
 }
