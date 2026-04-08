@@ -104,8 +104,9 @@
 
 | Skill | Status | Notes |
 |-------|--------|-------|
+| `context7` | ✅ | Upstash Context7 — codebase-aware programming context. 6 tools. Key: ctx7sk-81314b1f-66f3-4e61-b346-304600bee514 |
 | `mcporter` | 🔲 | CLI for MCP servers — list, configure, call |
-| `native-mcp` | 🔲 | Built-in MCP client — stdio/HTTP, auto-reconnect |
+| `native-mcp` | ✅ | Built-in MCP client — stdio/HTTP, auto-reconnect |
 
 ---
 

@@ -38,6 +38,8 @@ He will provide initial pointers (not exhaustive instructions) and expects me to
 
 **Documentation style:** Mike wants docs in .md files with emoji, color (HTML spans), tables, and mermaid diagrams when useful. Clean and readable, not boring.
 
+**Context7 MCP:** Connected via @upstash/context7-mcp. 6 tools available. Use for codebase-aware programming — it provides relevant code context from the workspace when doing programming tasks. Key: ctx7sk-81314b1f-66f3-4e61-b346-304600bee514
+
 ---
 
 ## capabilities
