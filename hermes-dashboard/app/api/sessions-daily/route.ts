@@ -1,13 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getSessionsDaily } from '@/lib/db';
 
-export const dynamic = 'force-dynamic';
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const data = getSessionsDaily();
     return NextResponse.json(data);
-  } catch {
-    return NextResponse.json({ error: 'Failed to fetch daily sessions' }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: 'Failed to fetch sessions daily' }, { status: 500 });
   }
 }

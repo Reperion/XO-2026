@@ -175,16 +175,17 @@ export function getTopTools(limit = 8): {name: string; calls: number}[] {
 }
 
 export function getSessionsDaily(days = 30): {date: string; sessions: number}[] {
+  const cutoff = Math.floor(Date.now() / 1000) - (days * 86400);
   const stmt = getDb().prepare(`
     SELECT 
-      strftime('%Y-%m-%d', datetime(started_at / 1000, 'unixepoch')) as date,
+      strftime('%Y-%m-%d', datetime(started_at, 'unixepoch')) as date,
       COUNT(*) as sessions 
     FROM sessions 
-    WHERE started_at >= (strftime('%s', 'now', '-? days') * 1000)
+    WHERE started_at >= ?
     GROUP BY date 
     ORDER BY date ASC
   `);
-  return stmt.all(days).map((r: any) => ({ date: r.date, sessions: r.sessions }));
+  return stmt.all(cutoff).map((r: any) => ({ date: r.date, sessions: r.sessions }));
 }
 
 export function searchGlobal(query: string, limit = 50): SearchHit[] {

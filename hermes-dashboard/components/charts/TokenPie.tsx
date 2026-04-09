@@ -1,4 +1,4 @@
-import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell } from 'recharts';
+import { PieChart, Pie, ResponsiveContainer, Tooltip, Cell, Legend } from 'recharts';
 import { FC } from 'react';
 
 interface Props {
@@ -11,11 +11,12 @@ const TokenPie: FC<Props> = ({ inputTokens, outputTokens }) => {
     { name: 'Input Tokens', value: inputTokens },
     { name: 'Output Tokens', value: outputTokens },
   ];
-  const COLORS = ['#0088FE', '#00C49F'];
+  const COLORS = ['#6366f1', '#22c55e'];
 
   return (
-    <div data-testid="token-pie" className="w-full h-80 bg-white rounded-lg shadow-lg p-6">
-      <ResponsiveContainer width="100%" height="100%">
+    <div data-testid="token-pie" className="w-full h-80 rounded-lg p-6" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+      <h3 style={{ color: 'var(--foreground)', marginBottom: '0.5rem', fontSize: '0.875rem', fontWeight: 600 }}>Token Distribution</h3>
+      <ResponsiveContainer width="100%" height="90%">
         <PieChart>
           <Pie
             data={data}
@@ -24,13 +25,18 @@ const TokenPie: FC<Props> = ({ inputTokens, outputTokens }) => {
             outerRadius={80}
             dataKey="value"
             nameKey="name"
-            label
+            label={(props: any) => `${props.name ?? ''} ${((props.percent ?? 0) * 100).toFixed(0)}%`}
+            stroke="var(--border)"
           >
             {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip
+            contentStyle={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: '0.5rem', color: 'var(--foreground)' }}
+            itemStyle={{ color: 'var(--foreground)' }}
+          />
+          <Legend wrapperStyle={{ color: 'var(--muted)', fontSize: '0.75rem' }} />
         </PieChart>
       </ResponsiveContainer>
     </div>

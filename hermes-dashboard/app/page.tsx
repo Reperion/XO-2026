@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import StatCard from '@/components/ui/StatCard';
 import SessionRow from '@/components/ui/SessionRow';
@@ -27,7 +27,7 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchHit[]>([]);
-  const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | undefined>();;
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -44,7 +44,7 @@ export default function DashboardPage() {
         const dailyData_ = await dailyRes.json();
         const sessionsData = await sessionsRes.json();
         setStats(statsData);
-        setToolData(toolData_);
+        setToolData((toolData_.tools || toolData_).map((t: any) => ({ name: t.tool_name || t.name, calls: t.call_count || t.calls })));
         setDailyData(dailyData_);
         setRecent(sessionsData.sessions);
       } catch {
@@ -71,11 +71,12 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (debounceTimer) clearTimeout(debounceTimer);
-    const timer = setTimeout(() => handleSearch(searchQuery), 300);
-    setDebounceTimer(timer as NodeJS.Timeout);
-    return () => clearTimeout(timer);
-  }, [searchQuery, handleSearch, debounceTimer]);
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => handleSearch(searchQuery), 300);
+    return () => {
+      if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    };
+  }, [searchQuery, handleSearch]);
 
   if (error) {
     return <div className="text-[var(--error)]">{error}</div>;
@@ -85,30 +86,52 @@ export default function DashboardPage() {
     <div>
       <h1 className="text-2xl font-semibold mb-6">Hermes Overview</h1>
 
-      <div className="mb-8">
+      <div className="mb-8 relative md:max-w-2xl">
         <input
           type="search"
           placeholder="Search messages, sessions, tools, jobs..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 md:max-w-2xl"
+          className="w-full p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+          style={{ background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--foreground)' }}
         />
+        {searchQuery && (
+          <button
+            onClick={() => { setSearchQuery(''); setSearchResults([]); }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-sm px-2 py-1 rounded"
+            style={{ color: 'var(--muted)' }}
+            title="Clear search"
+          >
+            ✕
+          </button>
+        )}
       </div>
 
       {searchResults.length > 0 && (
         <div className="mb-8 space-y-2 max-h-96 overflow-y-auto">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-sm" style={{ color: 'var(--muted)' }}>{searchResults.length} results</span>
+            <button
+              onClick={() => { setSearchQuery(''); setSearchResults([]); }}
+              className="text-xs px-3 py-1 rounded"
+              style={{ color: 'var(--muted)', border: '1px solid var(--border)' }}
+            >
+              Clear results
+            </button>
+          </div>
           {searchResults.map((hit, idx) => (
-            <details key={idx} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg">
-              <summary className="p-4 cursor-pointer list-none bg-gradient-to-r from-gray-50 to-gray-100 font-medium hover:bg-gray-100 flex items-center">
+            <details key={idx} className="rounded-lg overflow-hidden" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
+              <summary className="p-4 cursor-pointer list-none font-medium flex items-center" style={{ background: 'var(--card)' }}>
                 <span className={`w-3 h-3 rounded-full mr-3 flex-shrink-0 ${hit.type === 'message' ? 'bg-blue-500' : hit.type === 'session' ? 'bg-green-500' : 'bg-purple-500'}`} />
-                {hit.preview}
-                <span className="ml-auto text-xs text-gray-500">{new Date(hit.timestamp * 1000).toLocaleDateString()}</span>
+                <span style={{ color: 'var(--foreground)' }}>{hit.preview}</span>
+                <span className="ml-auto text-xs" style={{ color: 'var(--muted)' }}>{new Date(hit.timestamp * 1000).toLocaleDateString()}</span>
               </summary>
-              <div className="p-4 pt-0 bg-gray-50 text-sm">
-                {hit.snippet && hit.snippet !== hit.preview && <p>{hit.snippet}</p>}
+              <div className="p-4 pt-0 text-sm" style={{ background: 'var(--card-hover)', color: 'var(--foreground)' }}>
+                {hit.snippet && hit.snippet !== hit.preview && <p style={{ color: 'var(--muted)' }}>{hit.snippet}</p>}
                 <Link
                   href={`/sessions/${hit.session_id}`}
-                  className="text-blue-600 hover:underline text-xs mt-2 inline-block"
+                  className="hover:underline text-xs mt-2 inline-block"
+                  style={{ color: 'var(--accent)' }}
                 >
                   View in session →
                 </Link>

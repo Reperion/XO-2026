@@ -90,4 +90,15 @@ export interface CronJob {
   last_delivery_error: string | null;
   enabled: boolean;
   paused_at: string | null;
-  paused_reason: string | null;\n}\n\nexport interface SearchHit {\n  type: 'session' | 'message' | 'tool_call' | 'job';\n  id: string;\n  preview: string;\n  snippet?: string;\n  session_id: string;\n  timestamp: number;\n  score?: number;\n}
+  paused_reason: string | null;
+}
+
+export interface SearchHit {
+  type: 'session' | 'message' | 'tool_call' | 'job';
+  id: string;
+  preview: string;
+  snippet?: string;
+  session_id: string;
+  timestamp: number;
+  score?: number;
+}
