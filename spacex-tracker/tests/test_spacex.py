@@ -43,3 +43,27 @@ def test_format_launch_date_handles_invalid_date():
         assert False, "Should have raised ValueError"
     except ValueError:
         pass
+
+
+def test_get_rocket_name_returns_string():
+    """get_rocket_name should return the rocket name for a valid ID."""
+    from src.spacex import get_rocket_name, fetch_upcoming_launches
+    
+    launches = fetch_upcoming_launches()
+    rocket_id = launches[0]["rocket"]
+    
+    name = get_rocket_name(rocket_id)
+    
+    assert isinstance(name, str)
+    assert len(name) > 0
+
+
+def test_get_rocket_name_invalid_id_raises_error():
+    """get_rocket_name should raise an error for invalid rocket ID."""
+    from src.spacex import get_rocket_name
+    
+    try:
+        get_rocket_name("invalid-rocket-id-12345")
+        assert False, "Should have raised an error"
+    except Exception:
+        pass
