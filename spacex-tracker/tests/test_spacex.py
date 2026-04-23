@@ -20,3 +20,26 @@ def test_fetch_upcoming_launches_has_expected_keys():
     assert "name" in first_launch
     assert "date_utc" in first_launch
     assert "rocket" in first_launch
+
+
+def test_format_launch_date_returns_readable_date():
+    """format_launch_date should convert ISO date to readable format."""
+    from src.spacex import format_launch_date
+    
+    iso_date = "2026-04-23T14:30:00Z"
+    readable = format_launch_date(iso_date)
+    
+    assert isinstance(readable, str)
+    assert "2026" in readable
+    assert "April" in readable or "Apr" in readable
+
+
+def test_format_launch_date_handles_invalid_date():
+    """format_launch_date should raise ValueError for invalid date strings."""
+    from src.spacex import format_launch_date
+    
+    try:
+        format_launch_date("not-a-date")
+        assert False, "Should have raised ValueError"
+    except ValueError:
+        pass
