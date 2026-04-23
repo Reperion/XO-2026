@@ -149,7 +149,7 @@
 
 | Skill | Status | Notes |
 |-------|--------|-------|
-| `evaluating-llms-harness` | 🔲 | 60+ benchmarks — MMLU, HumanEval, GSM8K |
+| `evaluating-llms-harness` | ❌ CANCELLED | 60+ benchmarks — MMLU, HumanEval, GSM8K (no longer needed per Mike's request) |
 | `weights-and-biases` | 🔲 | Experiment tracking, sweeps |
 
 ### Models

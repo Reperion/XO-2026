@@ -64,8 +64,7 @@ When idle, XO should generate new project ideas tied to Mike's interests:
 
 1. **Tesla Autopilot**: Simulation environment, edge case generator, FSD data analyzer
 2. **SpaceX**: Launch tracker, trajectory simulator, Starship progress monitor
-3. **AI/Local Models**: Model benchmark suite, GGUF optimization, edge inference tester
-4. **XO Evolution**: New skills, self-improvement tools, agent research
+3. **XO Evolution**: New skills, self-improvement tools, agent research
 
 Use the "Daily Ideas Gen" cron (08:00) to brainstorm 5 ideas daily.
 
