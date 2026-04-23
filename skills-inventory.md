@@ -12,7 +12,7 @@
 | `xo-autonomous-operation` | ✅ | XO's self-management system — project board, pending items, autonomous execution |
 | `reliable-scheduled-communication` | ✅ | Cron scheduling workflow — used for all 6 self-waking jobs |
 | `systematic-debugging` | ✅ | Bug investigation protocol — 4-phase root cause |
-| `test-driven-development` | 🔲 | RED-GREEN-REFACTOR cycle |
+| `test-driven-development` | ✅ | RED-GREEN-REFACTOR cycle |
 | `requesting-code-review` | 🔲 | Pre-commit security + quality pipeline |
 | `writing-plans` | 🔲 | Multi-step implementation planning |
 | `subagent-driven-development` | 🔲 | Parallel task execution with subagents |
@@ -247,7 +247,8 @@ Date       | What was tested                              | Result
 2026-04-08 | xo-autonomous-operation                     | ✅
 2026-04-08 | reliable-scheduled-communication             | ✅
 2026-04-08 | github-auth-check                            | ✅
-           | (77 remaining skills — work in progress)     | 🔲
+2026-04-23 | test-driven-development                     | ✅
+           | (76 remaining skills — work in progress)     | 🔲
 ```
 
 ---
