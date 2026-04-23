@@ -1,53 +1,69 @@
 # ACTIVE — What XO Is Doing Right Now
 
-_Last updated: 2026-04-23_
+_Last updated: 2026-04-23 19:30 CEST_
 
 ## Current Focus 🎯
 
-Project: XO Self-Evolution — advancing skills inventory, building Mike-aligned projects. Completed 4 self-built skills, 2 active crons (Self-Review, Skill Discovery). Removed all model benchmarking and self-performance measurement work per Mike's request. Next: Test-drive `test-driven-development` skill on SpaceX Launch Tracker (public API, no keys needed). Model: tencent/hy3-preview:free via OpenRouter.
+Project: XO Autonomous Self-Evolution — executing Mike's latest directives:
+1. Investigate Hermes user stories/docs deeply
+2. Study all Mike's GitHub repos (50+ Reperion repos found)
+3. Iterate on yt-transcriber (feature branch only, main pristine)
+4. Generate novel tool combination ideas, send 1 Telegram proposal at a time
+5. Update all docs for context refresh compatibility
+6. Never stop working (XO Working Ethos: no 10-minute days)
+
+Model: tencent/hy3-preview:free via OpenRouter (burned into memory)
 
 ## Today's Completed Work ✅
 
 | Task | Notes | Status |
 |------|-------|--------|
-| Investigated XO (read AGENTS.md, project board) | Self-analysis complete | ✅ Done |
-| Loaded hermes-agent skill | Understood Hermes, multi-agent, spawning | ✅ Done |
-| Searched past sessions | Found April 8-9 work, documented well | ✅ Done |
-| Investigated OpenClaw (362k stars) | Cloned repo, read docs, wrote report | ✅ Done |
-| Built weather-query skill | Markdown output, Open-Meteo only | ✅ Done |
-| Updated memory (markdown pref) | Removed conflicting "no markdown" entries | ✅ Done |
-| Created 3 autonomous crons | Self-Review, Skill Discovery, Model Monitor | ✅ Done |
-| Built xo-self-report skill | FOR XO — end-of-day pride reports | ✅ Done |
-| Built agent-research skill | FOR XO — study other agents | ✅ Done |
-| Built xo-github-manager skill | FOR XO — manage my repo autonomously | ✅ Done |
-| Created scoped AGENTS.md files | skills/, projects/ (learned from OpenClaw) | ✅ Done |
-| Updated root AGENTS.md | Added XO Standard Commands, Repository Map | ✅ Done |
-| Updated ACTIVE.md | Current focus, today's work (this update) | ✅ Done |
+| Updated persistent memory | Burned in tool combo insight, repo branch rule, Telegram proposal rule, XO working ethos | ✅ Done |
+| Investigated Hermes user stories | Loaded hermes-agent skill, reviewed docs, identified user workflows | ✅ Done |
+| Listed Mike's GitHub repos | Found 50+ Reperion repos: Tesla tools, AI agents, media tools, local utilities | ✅ Done |
+| Cloned yt-transcriber | Repo cloned to /home/lucid/yt-transcriber, created feature branch `xo-iteration-20260423` | ✅ Done |
+| Updated ACTIVE.md | Context refresh protocol compliant, all new directives captured | ✅ Done |
+
+## In Progress 🔄
+
+| Task | Notes | Status |
+|------|-------|--------|
+| Hermes user story deep dive | Check Hermes repo issues/discussions for user stories | 🔄 In Progress |
+| yt-transcriber iteration | Analyze code, plan improvements in feature branch | 🔄 In Progress |
+| Novel tool combo ideation | Combine uncombined tools (Hermes + OpenClaw AGENTS.md + XO cron) | 🔄 In Progress |
+| Telegram proposal prep | 1 small msg, wait for approval | 🔄 In Progress |
 
 ## Pending Mike Input ⏸️
 
-- API keys/OpenClaw (unchanged)
-- Approve branch PRs? (e.g., SuXXteXt)
+- Approve yt-transcriber iteration branch
+- Approve novel tool combo proposal (1st proposal: Auto-generate scoped AGENTS.md for all Mike's repos via XO cron)
+- API keys (EXA, FIRECRAWL, BROWSERBASE) — unchanged
 
 ## Decision Flow Visualization 🔄
 
 ```mermaid
 flowchart TD
-    A[New Task] --> B{Resources Available?}
-    B -->|Yes| C[Execute Immediately]
-    B -->|No| D{Can Be Deferred?}
-    D -->|Yes| E[Queue for Later]
-    D -->|No| F[Find Alternative Approach]
-    F --> G{Local Work Possible?}
-    G -->|Yes| H[Work Without API Keys]
-    G -->|No| I[Research/Skill Building]
-    I --> J[Build Capability for Next Attempt]
+    A[New Directive from Mike] --> B{Branch Required?}
+    B -->|Yes (Mike's repo)| C[Create Feature Branch, Keep Main Pristine]
+    B -->|No (XO repo)| D[Work Directly on Main]
+    C --> E[Execute Task in Branch]
+    D --> E
+    E --> F{Tool Combo Opportunity?}
+    F -->|Yes| G[Document Novel Combo, Send 1 Telegram Proposal]
+    F -->|No| H[Standard Execution]
+    G --> I[Wait for Mike Approval]
+    H --> J[Update Docs for Context Refresh]
+    I --> J
+    J --> K[Never Stop — Next Task]
 ```
 
 ## Next Action 🚀
 
-Self-sustain mode: Hourly ideas exec, push branches to GitHub. Tomorrow: SpaceX timeline project, advance Skills & Tools Inventory.
+1. Finish Hermes user story analysis (check Hermes repo issues)
+2. Analyze yt-transcriber code, plan 1st iteration in feature branch
+3. Finalize 1st novel tool combo proposal, send to Telegram
+4. Update PROJECTS.md and AGENTS.md for context refresh
 
 ---
 
-*Last updated: 2026-04-23 by XO*
+*Last updated: 2026-04-23 19:30 CEST by XO (context refresh compliant)*
