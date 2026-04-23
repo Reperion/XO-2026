@@ -11,7 +11,7 @@
 |-------|--------|-------|
 | `xo-autonomous-operation` | ✅ | XO's self-management system — project board, pending items, autonomous execution |
 | `reliable-scheduled-communication` | ✅ | Cron scheduling workflow — used for all 6 self-waking jobs |
-| `systematic-debugging` | 🔲 | Bug investigation protocol — 4-phase root cause |
+| `systematic-debugging` | ✅ | Bug investigation protocol — 4-phase root cause |
 | `test-driven-development` | 🔲 | RED-GREEN-REFACTOR cycle |
 | `requesting-code-review` | 🔲 | Pre-commit security + quality pipeline |
 | `writing-plans` | 🔲 | Multi-step implementation planning |
