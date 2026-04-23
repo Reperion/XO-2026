@@ -99,3 +99,16 @@ def test_format_launch_for_display_includes_rocket_name():
     result = format_launch_for_display(launch, rocket_name="Starship")
     
     assert "Starship" in result
+
+
+def test_get_upcoming_launches_formatted_returns_list_of_strings():
+    """get_upcoming_launches_formatted should return formatted launch strings."""
+    from src.spacex import get_upcoming_launches_formatted
+    
+    result = get_upcoming_launches_formatted(limit=2)
+    
+    assert isinstance(result, list)
+    assert len(result) <= 2
+    for item in result:
+        assert isinstance(item, str)
+        assert "|" in item  # Our format includes pipe separators

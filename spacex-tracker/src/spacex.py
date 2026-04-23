@@ -49,3 +49,26 @@ def format_launch_for_display(launch, rocket_name=None):
         date_formatted = format_launch_date(date_str)
         return f"{name} | {date_formatted} | {rocket_name}"
     return f"{name} | {rocket_name}"
+
+
+def get_upcoming_launches_formatted(limit=None):
+    """Fetch and format upcoming launches for display."""
+    launches = fetch_upcoming_launches()
+    
+    if limit is not None:
+        launches = launches[:limit]
+    
+    result = []
+    for launch in launches:
+        rocket_id = launch.get("rocket")
+        rocket_name = None
+        if rocket_id:
+            try:
+                rocket_name = get_rocket_name(rocket_id)
+            except ValueError:
+                rocket_name = "Unknown Rocket"
+        
+        formatted = format_launch_for_display(launch, rocket_name=rocket_name)
+        result.append(formatted)
+    
+    return result
