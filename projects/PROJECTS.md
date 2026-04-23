@@ -22,6 +22,7 @@
 | 5 | Reperion Repo Analysis | IN PROGRESS | Studied 50+ Mike's repos: Tesla tools, AI agents, media tools, local utilities. Understand Mike's work style. |
 | 6 | yt-transcriber Iteration | IN PROGRESS | Cloned to /home/lucid/yt-transcriber, created feature branch `xo-iteration-20260423`. Planning improvements to yt-dlp + whisper combo. |
 | 7 | Novel Tool Combo Ideation | IN PROGRESS | Generate uncombined tool combos (e.g., Hermes + OpenClaw AGENTS.md + XO cron). Send 1 Telegram proposal at a time. |
+| 8 | SpaceX Launch Tracker | IN PROGRESS | Feature branch `feature/spacex-launch-tracker`. TDD-built Python API wrapper + CLI. Fetches upcoming launches from SpaceX API (public, no keys needed). 9 tests passing. CLI: `python spacex-tracker/show_launches.py` |
 
 ## Skills Created (All Time)
 
