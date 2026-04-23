@@ -13,7 +13,7 @@
 | `reliable-scheduled-communication` | ✅ | Cron scheduling workflow — used for all 6 self-waking jobs |
 | `systematic-debugging` | ✅ | Bug investigation protocol — 4-phase root cause |
 | `test-driven-development` | ✅ | RED-GREEN-REFACTOR cycle |
-| `requesting-code-review` | 🔲 | Pre-commit security + quality pipeline |
+| `requesting-code-review` | ✅ | Pre-commit security + quality pipeline |
 | `writing-plans` | 🔲 | Multi-step implementation planning |
 | `subagent-driven-development` | 🔲 | Parallel task execution with subagents |
 
@@ -247,8 +247,9 @@ Date       | What was tested                              | Result
 2026-04-08 | xo-autonomous-operation                     | ✅
 2026-04-08 | reliable-scheduled-communication             | ✅
 2026-04-08 | github-auth-check                            | ✅
-2026-04-23 | test-driven-development                     | ✅
-           | (76 remaining skills — work in progress)     | 🔲
+|2026-04-23 | test-driven-development                     | ✅
+|2026-04-23 | requesting-code-review                       | ✅
+|           | (75 remaining skills — work in progress)     | 🔲
 ```
 
 ---
