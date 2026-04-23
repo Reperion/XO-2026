@@ -14,7 +14,7 @@
 | `systematic-debugging` | ✅ | Bug investigation protocol — 4-phase root cause |
 | `test-driven-development` | ✅ | RED-GREEN-REFACTOR cycle |
 | `requesting-code-review` | ✅ | Pre-commit security + quality pipeline |
-| `writing-plans` | 🔲 | Multi-step implementation planning |
+| `writing-plans` | ✅ | Multi-step implementation planning |
 | `subagent-driven-development` | 🔲 | Parallel task execution with subagents |
 
 ---
@@ -249,7 +249,8 @@ Date       | What was tested                              | Result
 2026-04-08 | github-auth-check                            | ✅
 |2026-04-23 | test-driven-development                     | ✅
 |2026-04-23 | requesting-code-review                       | ✅
-|           | (75 remaining skills — work in progress)     | 🔲
+|2026-04-23 | writing-plans                               | ✅
+|           | (74 remaining skills — work in progress)     | 🔲
 ```
 
 ---
