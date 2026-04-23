@@ -35,3 +35,17 @@ def get_rocket_name(rocket_id):
         return data["name"]
     except Exception as e:
         raise ValueError(f"Failed to fetch rocket {rocket_id}: {e}")
+
+
+def format_launch_for_display(launch, rocket_name=None):
+    """Format a launch dict into a readable display string."""
+    name = launch.get("name", "Unknown Mission")
+    date_str = launch.get("date_utc", "")
+    
+    if rocket_name is None:
+        rocket_name = launch.get("rocket", "Unknown Rocket")
+    
+    if date_str:
+        date_formatted = format_launch_date(date_str)
+        return f"{name} | {date_formatted} | {rocket_name}"
+    return f"{name} | {rocket_name}"

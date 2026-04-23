@@ -67,3 +67,35 @@ def test_get_rocket_name_invalid_id_raises_error():
         assert False, "Should have raised an error"
     except Exception:
         pass
+
+
+def test_format_launch_for_display_returns_formatted_string():
+    """format_launch_for_display should return a readable string."""
+    from src.spacex import format_launch_for_display
+    
+    launch = {
+        "name": "Starlink-17",
+        "date_utc": "2026-05-01T12:00:00Z",
+        "rocket": "5e9d0d95eda69973a809d1ec"
+    }
+    
+    result = format_launch_for_display(launch)
+    
+    assert isinstance(result, str)
+    assert "Starlink-17" in result
+    assert "May" in result or "2026" in result
+
+
+def test_format_launch_for_display_includes_rocket_name():
+    """format_launch_for_display should include rocket name when provided."""
+    from src.spacex import format_launch_for_display
+    
+    launch = {
+        "name": "Starship Orbital Test",
+        "date_utc": "2026-06-15T14:00:00Z",
+        "rocket": "5e9d0d95eda69973a809d1ec"
+    }
+    
+    result = format_launch_for_display(launch, rocket_name="Starship")
+    
+    assert "Starship" in result
