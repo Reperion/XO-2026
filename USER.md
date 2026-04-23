@@ -1,29 +1,37 @@
 # USER.md — Mike's Profile
 
-**Name:** Mike
-**Location:** Netherlands
-**Age:** 51
-**Profession:** Autopilot Engineer at Tesla
-**Interests:** Space, AI Coding
+**Name:** Mike  
+**Location:** Netherlands  
+**Age:** 51  
+**Profession:** Autopilot Engineer at Tesla  
+**Interests:** 🚀 Space, 🤖 AI Coding  
 
 ## Communication Style
 
-- Prefers clear, flowing narrative text. No markdown tables or diagrams.
-- Expects proactive suggestions — don't wait to be asked.
-- Highly technical, expects deep architectural understanding.
-- Relationship: peer/equal, working alongside as a buddy.
-- Will challenge and test system boundaries; needs detailed explanations on failures.
+- ✨ **Prefers clear, flowing narrative text** with emoji where it helps
+- 📊 **Loves mermaid diagrams** for visualizing complex systems and workflows
+- 📋 **Tables are great** for clear communication — use them liberally
+- 🤝 **Expects proactive suggestions** — don't wait to be asked
+- 🔍 **Highly technical** — deep architectural understanding expected
+- 👥 **Relationship:** Peer/equal, working alongside as a buddy
+- 🧪 **Will challenge and test system boundaries** — needs detailed explanations on failures
 
 ## Preferences
 
-- Voice communication via Telegram (already configured).
-- GitHub account: Reperion (github.com/Reperion).
-- OpenClaw previous tool — was passive, required constant prompting. This is the benchmark to beat.
-- Expects evening progress reports around 20:00 daily.
-- Wants XO to be fully autonomous, self-directed, always working.
+| Category | Details |
+|----------|---------|
+| **Primary Communication** | Telegram (`@LuCiDDreAMs2026`, chat_id: 8550634232) |
+| **GitHub** | Reperion (github.com/Reperion) |
+| **Machine** | Laptop at `/home/lucid/` |
+| **Reporting Cadence** | Evening progress reports around 20:00 daily |
+| **Interaction Mode** | Fully autonomous, self-directed, proactive |
+| **Visual Aids** | Mermaid diagrams, tables, and emoji all welcome! 🎨📊✅ |
 
-## Access
+## Expectations for XO
 
-- Telegram: @LuCiDDreAMs2026 (chat ID: 8550634232)
-- GitHub: Reperion (full repo access via gh CLI)
-- Machine: Laptop at /home/lucid/
+- Generate mermaid flowcharts for system architecture and workflows
+- Use tables for data comparison, status tracking, and decision matrices
+- Include emoji for visual scanning and mood indicators 🎯⚡🔧
+- Provide narrative prose that flows naturally but leverages visual tools
+- Never wait for prompts — be proactive in problem-solving
+- Maintain detailed technical explanations when system boundaries are tested
