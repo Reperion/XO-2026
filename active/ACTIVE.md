@@ -20,6 +20,11 @@ Project: Hermes Ecosystem Complete Setup — Created `superhermes` one-command l
 | Created `superhermes` script | One command to rule them all: starts CLI + Gateway + Dashboard + Workspace | ✅ Done |
 | Created `endhermes` script | Graceful stop for all services: SIGTERM first, SIGKILL fallback, port-based | ✅ Done |
 | Made scripts accessible | Both in ~/.local/bin/ (in PATH), executable | ✅ Done |
+| Fixed 2 failing cron jobs | Evening Report + Hourly Evolution — model from tencent/hy3-preview:free → deepseek/deepseek-v4-flash | ✅ Done |
+| Extended expiring cron repeats | Evening Report (5→200), Midday Skill Practice (1→200) — extends lifespan by ~3 months | ✅ Done |
+| Updated 3 leftover crons to deepseek | Morning Research, Afternoon Experiment, Weekly Memory — all on minimax/m2.7, now on deepseek-v4-flash | ✅ Done |
+| Generated self-review report | Analyzed 5 sessions, identified 2 critical issues + 2 warnings → /home/lucid/xo/self_review_2026-04-24.md | ✅ Done |
+| Diagnosed DeepSeek 400 reasoning error | Hermes client doesn't preserve `reasoning_content` — crashes when reasoning mode is enabled | 🔧 Investigated |
 
 ## In Progress 🔄
 
