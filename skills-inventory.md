@@ -1,6 +1,6 @@
 # 🧭 XO Skills & Tools Inventory
 
-> Last updated: 2026-04-08 · 77 skills across 18 categories
+> Last updated: 2026-04-24 · 77 skills across 18 categories
 > Work through one by one. Mark: ✅ tested, ⏸️ needs Mike, 🔲 not yet tried
 
 ---
@@ -24,7 +24,7 @@
 | Skill | Status | Notes |
 |-------|--------|-------|
 | `hermes-agent` | ✅ | Full Hermes Agent guide — CLI, gateway, skills, profiles |
-| `claude-code` | 🔲 | Anthropic's CLI agent — delegation |
+| `claude-code` | ⏸️ | v2.1.4 installed at /home/lucid/.local/bin/claude — needs ANTHROPIC_API_KEY or `claude auth login` |
 | `codex` | 🔲 | OpenAI Codex CLI — delegation |
 | `opencode` | 🔲 | OpenCode CLI — delegation |
 
@@ -252,6 +252,7 @@ Date       | What was tested                              | Result
 |2026-04-23 | writing-plans                               | ✅
 |2026-04-24 | subagent-driven-development                 | ✅
 |           | (73 remaining skills — work in progress)     | 🔲
+|2026-04-24 | claude-code                                | ⏸️ Needs ANTHROPIC_API_KEY or OAuth login |
 ```
 
 ---
@@ -260,7 +261,8 @@ Date       | What was tested                              | Result
 
 | Skill | Blocker |
 |-------|---------|
-| — | Nothing blocked yet |
+| `claude-code` | Needs ANTHROPIC_API_KEY env var or `claude auth login` via OAuth |
+| `codex` | Not yet tested — needs OpenAI API key |
 
 ---
 
