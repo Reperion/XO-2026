@@ -40,6 +40,7 @@
 | `manim-video` | 🔲 | 3Blue1Brown-style math animations |
 | `p5js` | 🔲 | Interactive generative art in browser |
 | `popular-web-designs` | 🔲 | 54 production design systems (Stripe, Linear, etc.) |
+| `video-message` | ✅ | New! Captioned video with TTS voiceover + Telegram delivery. Rebuilt from OpenClaw pipeline. |
 | `songwriting-and-ai-music` | 🔲 | Suno prompts, phonetic tricks |
 
 ---
