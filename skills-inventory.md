@@ -15,7 +15,7 @@
 | `test-driven-development` | ✅ | RED-GREEN-REFACTOR cycle |
 | `requesting-code-review` | ✅ | Pre-commit security + quality pipeline |
 | `writing-plans` | ✅ | Multi-step implementation planning |
-| `subagent-driven-development` | 🔲 | Parallel task execution with subagents |
+| `subagent-driven-development` | ✅ | Parallel task execution with subagents |
 
 ---
 
@@ -250,7 +250,8 @@ Date       | What was tested                              | Result
 |2026-04-23 | test-driven-development                     | ✅
 |2026-04-23 | requesting-code-review                       | ✅
 |2026-04-23 | writing-plans                               | ✅
-|           | (74 remaining skills — work in progress)     | 🔲
+|2026-04-24 | subagent-driven-development                 | ✅
+|           | (73 remaining skills — work in progress)     | 🔲
 ```
 
 ---
