@@ -4,6 +4,15 @@
 
 ## ✅ Recently Completed
 
+### xurl (X/Twitter) — Fully Configured & Working
+
+- **Skill**: `xurl` updated to v1.3.0 with new console URL, setup flow, and cost awareness
+- **App**: `x-api-demo` registered, OAuth2 for @ElohimKhrist, set as default
+- **Console URL**: `console.x.com` (old `developer.twitter.com` deprecated)
+- **Plan**: Pay Per Use with $5 credits — ~$0.04/user lookup, ~$0.05/search
+- **Key discovery**: Projects concept removed in new console — apps activated by setting to Production environment directly
+- **Skill patched**: Added callback URI requirement, console migration, timeline workaround (no --of flag, use raw v2 endpoint), cost structure in troubleshooting
+
 ### Video Message Skill — Rebuilt from OpenClaw Pipeline
 
 - **Found**: XO-1 repo (`/tmp/XO-1/remotion/`) — the original XO running on OpenClaw v2026.2.1
