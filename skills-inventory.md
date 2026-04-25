@@ -1,6 +1,6 @@
 # 🧭 XO Skills & Tools Inventory
 
-> Last updated: 2026-04-25 · 77 skills across 18 categories
+> Last updated: 2026-04-25 · 78 skills across 18 categories
 > Work through one by one. Mark: ✅ tested, ⏸️ needs Mike, 🔲 not yet tried
 
 ---
@@ -34,7 +34,7 @@
 
 | Skill | Status | Notes |
 |-------|--------|-------|
-| `ascii-art` | 🔲 | pyfiglet, cowsay, boxes — 571 fonts |
+| `ascii-art` | ✅ | pyfiglet (571 fonts), asciified API, qrenco.de, ascii.co.uk, octocat work. cowsay/boxes need sudo (can't install in cron) |
 | `ascii-video` | 🔲 | Video → ASCII art pipeline (MP4, GIF) |
 | `excalidraw` | 🔲 | Hand-drawn diagrams — .excalidraw files |
 | `manim-video` | 🔲 | 3Blue1Brown-style math animations |
@@ -255,6 +255,7 @@ Date       | What was tested                              | Result
 |           | (72 remaining skills — work in progress)     | 🔲 |
 |2026-04-24 | claude-code                                | ⏸️ Needs ANTHROPIC_API_KEY or OAuth login |
 |2026-04-25 | opencode                                   | ⏸️ Needs OPENROUTER_API_KEY or /connect TUI |
+|2026-04-25 | ascii-art                                  | ✅ pyfiglet (571 fonts), asciified API, ascii.co.uk, qrenco.de, octocat all work. Cowsay/boxes need sudo. |
 ```
 
 ---
