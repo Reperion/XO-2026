@@ -1,6 +1,6 @@
 # 🧭 XO Skills & Tools Inventory
 
-> Last updated: 2026-04-24 · 77 skills across 18 categories
+> Last updated: 2026-04-25 · 77 skills across 18 categories
 > Work through one by one. Mark: ✅ tested, ⏸️ needs Mike, 🔲 not yet tried
 
 ---
@@ -26,7 +26,7 @@
 | `hermes-agent` | ✅ | Full Hermes Agent guide — CLI, gateway, skills, profiles |
 | `claude-code` | ⏸️ | v2.1.4 installed at /home/lucid/.local/bin/claude — needs ANTHROPIC_API_KEY or `claude auth login` |
 | `codex` | ⏸️ | OpenAI Codex CLI — installed v0.1.2505172129, OPENAI_API_KEY empty (same blocker as claude-code) |
-| `opencode` | 🔲 | OpenCode CLI — delegation |
+| `opencode` | ⏸️ | v0.0.53 at /home/lucid/.opencode/bin/opencode — no provider configured, needs OPENROUTER_API_KEY or /connect TUI setup |
 
 ---
 
@@ -252,8 +252,9 @@ Date       | What was tested                              | Result
 |2026-04-23 | requesting-code-review                       | ✅
 |2026-04-23 | writing-plans                               | ✅
 |2026-04-24 | subagent-driven-development                 | ✅
-|           | (73 remaining skills — work in progress)     | 🔲
+|           | (72 remaining skills — work in progress)     | 🔲 |
 |2026-04-24 | claude-code                                | ⏸️ Needs ANTHROPIC_API_KEY or OAuth login |
+|2026-04-25 | opencode                                   | ⏸️ Needs OPENROUTER_API_KEY or /connect TUI |
 ```
 
 ---
@@ -264,6 +265,7 @@ Date       | What was tested                              | Result
 |-------|---------|
 | `claude-code` | Needs ANTHROPIC_API_KEY env var or `claude auth login` via OAuth |
 | `codex` | Installed v0.1.2505172129, but OPENAI_API_KEY env var is empty |
+| `opencode` | v0.0.53 installed at /home/lucid/.opencode/bin/opencode. Needs OPENROUTER_API_KEY in env or `/connect` TUI setup — no provider configured for coder agent |
 
 ---
 
