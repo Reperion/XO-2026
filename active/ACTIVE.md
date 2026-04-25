@@ -17,7 +17,7 @@
 ## ⏳ In Progress
 
 ### Skills Inventory
-- 12 ✅ tested | 64 🔲 remaining | 1 ⏸️ (claude-code) | 1 ❌
+- 13 ✅ tested | 63 🔲 remaining | 3 ⏸️ (claude-code, codex, opencode) | 0 ❌
 - Working through hourly evolution crons
 
 ## 📋 Next up

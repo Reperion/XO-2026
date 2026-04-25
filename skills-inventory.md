@@ -35,7 +35,7 @@
 | Skill | Status | Notes |
 |-------|--------|-------|
 | `ascii-art` | ✅ | pyfiglet (571 fonts), asciified API, qrenco.de, ascii.co.uk, octocat work. cowsay/boxes need sudo (can't install in cron) |
-| `ascii-video` | 🔲 | Video → ASCII art pipeline (MP4, GIF) |
+| `ascii-video` | ✅ | Video → ASCII art pipeline — all deps (numpy, pillow, scipy, ffmpeg) working, frame rendering + ffmpeg encode tested 2026-04-25 |
 | `excalidraw` | 🔲 | Hand-drawn diagrams — .excalidraw files |
 | `manim-video` | 🔲 | 3Blue1Brown-style math animations |
 | `p5js` | 🔲 | Interactive generative art in browser |
@@ -252,10 +252,11 @@ Date       | What was tested                              | Result
 |2026-04-23 | requesting-code-review                       | ✅
 |2026-04-23 | writing-plans                               | ✅
 |2026-04-24 | subagent-driven-development                 | ✅
-|           | (72 remaining skills — work in progress)     | 🔲 |
+|           | (71 remaining skills — work in progress)     | 🔲 |
 |2026-04-24 | claude-code                                | ⏸️ Needs ANTHROPIC_API_KEY or OAuth login |
 |2026-04-25 | opencode                                   | ⏸️ Needs OPENROUTER_API_KEY or /connect TUI |
 |2026-04-25 | ascii-art                                  | ✅ pyfiglet (571 fonts), asciified API, ascii.co.uk, qrenco.de, octocat all work. Cowsay/boxes need sudo. |
+|2026-04-25 | ascii-video                                | ✅ All deps (numpy, pillow, scipy, ffmpeg) working. Frame rendering, tonemap, ffmpeg pipe encode all tested. |
 ```
 
 ---
