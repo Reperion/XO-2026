@@ -37,9 +37,9 @@
 | `ascii-art` | ✅ | pyfiglet (571 fonts), asciified API, qrenco.de, ascii.co.uk, octocat work. cowsay/boxes need sudo (can't install in cron) |
 | `ascii-video` | ✅ | Video → ASCII art pipeline — all deps (numpy, pillow, scipy, ffmpeg) working, frame rendering + ffmpeg encode tested 2026-04-25 |
 || `excalidraw` | ✅ | Hand-drawn diagrams — .excalidraw files, upload script (cryptography 46.0.7), shareable links |
-| `manim-video` | 🔲 | 3Blue1Brown-style math animations |
-| `p5js` | 🔲 | Interactive generative art in browser |
-| `popular-web-designs` | 🔲 | 54 production design systems (Stripe, Linear, etc.) |
+|| `manim-video` | ✅ | Manim CE v0.20.1 — installed via local .deb extraction (no sudo). Both scenes render at -ql. |
+|| `p5js` | 🔲 | Interactive generative art in browser |
+|| `popular-web-designs` | 🔲 | 54 production design systems (Stripe, Linear, etc.) |
 | `video-message` | ✅ | New! Captioned video with TTS voiceover + Telegram delivery. Rebuilt from OpenClaw pipeline. |
 | `songwriting-and-ai-music` | 🔲 | Suno prompts, phonetic tricks |
 
@@ -257,6 +257,7 @@ Date       | What was tested                              | Result
 |2026-04-25 | opencode                                   | ⏸️ Needs OPENROUTER_API_KEY or /connect TUI |
 |2026-04-25 | ascii-art                                  | ✅ pyfiglet (571 fonts), asciified API, ascii.co.uk, qrenco.de, octocat all work. Cowsay/boxes need sudo. |
 |2026-04-25 | ascii-video                                | ✅ All deps (numpy, pillow, scipy, ffmpeg) working. Frame rendering, tonemap, ffmpeg pipe encode all tested. |
+|2026-04-25 | manim-video                                | ✅ Manim CE v0.20.1 installed via local .deb extraction (no sudo). HelloWorld + SquareToCircle scenes rendered at -ql. |
 ```
 
 ---
