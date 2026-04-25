@@ -25,7 +25,7 @@
 |-------|--------|-------|
 | `hermes-agent` | ✅ | Full Hermes Agent guide — CLI, gateway, skills, profiles |
 | `claude-code` | ⏸️ | v2.1.4 installed at /home/lucid/.local/bin/claude — needs ANTHROPIC_API_KEY or `claude auth login` |
-| `codex` | 🔲 | OpenAI Codex CLI — delegation |
+| `codex` | ⏸️ | OpenAI Codex CLI — installed v0.1.2505172129, OPENAI_API_KEY empty (same blocker as claude-code) |
 | `opencode` | 🔲 | OpenCode CLI — delegation |
 
 ---
@@ -263,7 +263,7 @@ Date       | What was tested                              | Result
 | Skill | Blocker |
 |-------|---------|
 | `claude-code` | Needs ANTHROPIC_API_KEY env var or `claude auth login` via OAuth |
-| `codex` | Not yet tested — needs OpenAI API key |
+| `codex` | Installed v0.1.2505172129, but OPENAI_API_KEY env var is empty |
 
 ---
 
