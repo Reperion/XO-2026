@@ -1,41 +1,52 @@
-"""SpaceX launch tracker - fetch upcoming launches."""
+"""SpaceX launch tracker - fetch upcoming launches using Launch Library 2."""
 
 import urllib.request
 import json
 from datetime import datetime
 
-API_BASE = "https://api.spacexdata.com/v4"
-
+# Using Launch Library 2 as it is more reliably maintained in 2026
+API_BASE = "https://ll.thespacedevs.com/2.2.0"
+USER_AGENT = "SpaceXTracker/1.0 (Contact: Reperion)"
 
 def _api_get(endpoint):
-    """Make GET request to SpaceX API and return parsed JSON."""
+    """Make GET request to API and return parsed JSON."""
     url = f"{API_BASE}{endpoint}"
-    with urllib.request.urlopen(url) as response:
+    req = urllib.request.Request(url, headers={'User-Agent': USER_AGENT})
+    with urllib.request.urlopen(req) as response:
         return json.loads(response.read())
 
-
-def fetch_upcoming_launches():
-    """Fetch upcoming SpaceX launches from the public API."""
-    return _api_get("/launches/upcoming")
-
+def fetch_upcoming_launches(limit=20):
+    """Fetch upcoming SpaceX launches from Launch Library 2 API."""
+    # Filter for SpaceX missions (search=SpaceX) with a higher default limit
+    data = _api_get(f"/launch/upcoming/?search=SpaceX&limit={limit}")
+    
+    # Map LL2 structure to the format expected by the rest of the app
+    launches = []
+    for item in data.get("results", []):
+        launch = {
+            "name": item.get("name"),
+            "date_utc": item.get("net"),  # 'net' is ISO 8601
+            "rocket": item.get("rocket", {}).get("configuration", {}).get("full_name", "Unknown Rocket")
+        }
+        launches.append(launch)
+    return launches
 
 def format_launch_date(iso_string):
     """Convert ISO date string to readable format."""
     try:
+        # LL2 dates are typically like '2026-05-03T06:59:00Z'
         dt = datetime.fromisoformat(iso_string.replace("Z", "+00:00"))
         return dt.strftime("%B %d, %Y at %H:%M UTC")
     except ValueError:
         raise ValueError(f"Invalid date string: {iso_string}")
 
-
 def get_rocket_name(rocket_id):
-    """Fetch rocket name for a given rocket ID."""
-    try:
-        data = _api_get(f"/rockets/{rocket_id}")
-        return data["name"]
-    except Exception as e:
-        raise ValueError(f"Failed to fetch rocket {rocket_id}: {e}")
-
+    """
+    Fetch rocket name. 
+    Note: LL2 includes this in the launch object, so this is now a passthrough 
+    or legacy support for the test suite.
+    """
+    return str(rocket_id)
 
 def format_launch_for_display(launch, rocket_name=None):
     """Format a launch dict into a readable display string."""
@@ -50,25 +61,17 @@ def format_launch_for_display(launch, rocket_name=None):
         return f"{name} | {date_formatted} | {rocket_name}"
     return f"{name} | {rocket_name}"
 
-
-def get_upcoming_launches_formatted(limit=None):
+def get_upcoming_launches_formatted(limit=20):
     """Fetch and format upcoming launches for display."""
-    launches = fetch_upcoming_launches()
+    launches = fetch_upcoming_launches(limit=limit)
     
     if limit is not None:
         launches = launches[:limit]
     
     result = []
     for launch in launches:
-        rocket_id = launch.get("rocket")
-        rocket_name = None
-        if rocket_id:
-            try:
-                rocket_name = get_rocket_name(rocket_id)
-            except ValueError:
-                rocket_name = "Unknown Rocket"
-        
-        formatted = format_launch_for_display(launch, rocket_name=rocket_name)
+        # Rocket name is already embedded in our mapped structure
+        formatted = format_launch_for_display(launch)
         result.append(formatted)
     
     return result

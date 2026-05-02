@@ -1,0 +1,4 @@
+Proposal 2: Tesla Autopilot Sim
+Status: REJECTED
+Date: 2026-04-23
+Reason: User said "No" to Telegram proposal

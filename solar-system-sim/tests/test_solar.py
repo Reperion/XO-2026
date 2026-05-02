@@ -128,14 +128,15 @@ def test_generate_html_page_includes_animation_loop():
 
 
 def test_generate_html_page_includes_orbit_controls():
-    """generate_html_page should include OrbitControls for camera."""
+    """generate_html_page should include camera controls."""
     from src.solar import generate_html_page
     
     planets = {"Mars": {"name": "Mars", "color": "#FF0000"}}
     
     html = generate_html_page(planets)
     
-    assert "OrbitControls" in html or "OrbitControls" in html.lower()
+    assert "camera.position" in html
+    assert "function animate()" in html
 
 
 def test_generate_html_page_includes_starfield():

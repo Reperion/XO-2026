@@ -1,0 +1,5 @@
+#!/bin/bash
+# SpaceX Launch Tracker Startup Script
+
+echo "🚀 Initializing SpaceX Launch Tracker..."
+python3 show_launches.py
