@@ -105,7 +105,7 @@ def generate_html_page(planets):
     """Generate HTML page with Three.js scene for solar system."""
     planet_script = ""
     for name, data in planets.items():
-        planet_script += f"// {name}\n"
+        planet_script += render_planet(data)
     
     html = f"""<!DOCTYPE html>
 <html>
@@ -139,3 +139,22 @@ def generate_html_page(planets):
 </body>
 </html>"""
     return html
+
+
+def render_planet(planet_data):
+    """Return JavaScript code to create and position a planet mesh."""
+    import math
+    
+    radius_normalized = planet_data.get("radius_km", 6371.0) / 24500  # Default to Earth radius
+    distance = planet_data.get("distance_au", 1.0) * 100  # Scale for visualization
+    
+    js = f"""
+    // Create {planet_data['name']}
+    const {planet_data['name'].lower()}_geometry = new THREE.SphereGeometry({radius_normalized:.3f}, 32, 32);
+    const {planet_data['name'].lower()}_material = new THREE.MeshBasicMaterial({{ color: {planet_data['color']} }});
+    const {planet_data['name'].lower()}_mesh = new THREE.Mesh({planet_data['name'].lower()}_geometry, {planet_data['name'].lower()}_material);
+    {planet_data['name'].lower()}_mesh.position.x = {distance:.1f};
+    {planet_data['name'].lower()}_mesh.position.z = 0;
+    scene.add({planet_data['name'].lower()}_mesh);
+    """
+    return js

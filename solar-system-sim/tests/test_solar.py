@@ -80,3 +80,37 @@ def test_generate_html_page_includes_canvas():
     assert "<canvas id=" in html
     assert "script" in html.lower()
 
+
+def test_render_planet_returns_javascript():
+    """render_planet should return JavaScript code for creating a planet mesh."""
+    from src.solar import render_planet
+    
+    planet_data = {
+        "name": "Earth",
+        "color": "#6B93D6",
+        "radius_km": 6371.0,
+        "distance_au": 1.0
+    }
+    
+    js_code = render_planet(planet_data)
+    
+    assert "THREE.Mesh" in js_code
+    assert "THREE.SphereGeometry" in js_code
+    assert "Earth" in js_code
+
+
+def test_render_planet_positions_at_distance():
+    """render_planet should position planet at its orbital distance."""
+    from src.solar import render_planet
+    
+    planet_data = {
+        "name": "Mars",
+        "color": "#FF0000",
+        "radius_km": 3389.5,
+        "distance_au": 1.52
+    }
+    
+    js_code = render_planet(planet_data)
+    
+    assert "position.x" in js_code or "position.z" in js_code
+
