@@ -1,6 +1,6 @@
 # ACTIVE — Current Work
 
-> Last updated: 2026-05-02 21:45
+> Last updated: 2026-05-02 22:30
 
 ## ✅ Recently Completed
 
@@ -30,6 +30,14 @@
 - **Kanban tasks completed**: T1-T4 via `hermes kanban complete`
 - **Git**: commit `70fa8c8`, pushed to `origin/main`
 
+### Memory System Optimization — NEW (2026-05-02)
+- **Internal memory** (`~/.hermes/memories/MEMORY.md`): Trimmed to 3839 chars (48% of 8000 limit) — was 7153 chars (88%)
+- **External vault** (`/home/lucid/xo/MEMORY.md`): Updated to 15342 chars with hermes-local-services info, KANBAN_PLAYBOOK reference
+- **Mapping completed**: Internal (injected) vs External (reference) architecture documented
+- **ACTIME.md**: File correctly named (my narration had typo "ACTIV.md" but actual file is "ACTIVE.md")
+- **Optimization**: 46% reduction in internal memory size — saves tokens on every session startup
+- **New references added**: hermes-local-services skill, KANBAN_PLAYBOOK workflow, todo vs kanban clarification
+
 ## ⏳ In Progress
 
 ### Skills Inventory
@@ -38,8 +46,9 @@
 
 ## 📋 Next up
 1. Use hermes-local-services skill to interact with Workspace/Dashboard autonomously
-2. Continue skills inventory testing via cron
-3. Proposal system: Send Mike a Telegram proposal
+2. Follow KANBAN_PLAYBOOK.md workflow for kanban-driven evolution
+3. Continue skills inventory testing via cron
+4. Proposal system: Send Mike a Telegram proposal
 
 ## 🔄 Active Cron Jobs
 - 09:00 — Morning Research Sprint

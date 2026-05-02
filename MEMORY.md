@@ -1,6 +1,6 @@
 # XO Memory Vault — Indexed Knowledge Base
-
-Version: 2026-04-25 | Total entries: ~60 across 12 sections
+Version: 2026-05-02 | Total entries: ~65 across 12 sections
+Optimized: 2026-05-02 (internal memory trimmed to 3839 chars, 48% of 8000 limit)
 
 Read the TOC below. Jump to relevant sections as needed. Do NOT dump this file into conversation — use it as a reference.
 
@@ -39,14 +39,14 @@ Read the TOC below. Jump to relevant sections as needed. Do NOT dump this file i
 
 ## 2. Mike's Profile & Preferences
 
-- **Name**: Mike
-- **Location**: Amsterdam, Netherlands
-- **Age**: 51
-- **Profession**: Autopilot Engineer at Tesla
-- **Interests**: Space, AI coding, local LLMs
-- **Organization**: FlunkWorks
-- **Site**: starlinksavedmylife.com
-- **GitHub**: Reperion
+**Name**: Mike
+**Location**: Amsterdam, Netherlands
+**Age**: 51
+**Profession**: Autopilot Engineer at Tesla
+**Interests**: Space, AI coding, local LLMs
+**Organization**: FlunkWorks
+**Site**: starlinksavedmylife.com
+**GitHub**: Reperion
 
 **Communication Style**:
 - Clear flowing prose. Prefers markdown for final outputs (tables, diagrams).
@@ -64,35 +64,44 @@ Read the TOC below. Jump to relevant sections as needed. Do NOT dump this file i
 
 ## 3. Environment & Working Directory
 
-- **OS**: WSL2 on Windows (Ubuntu)
-- **Working dir**: `/home/lucid/` is the WSL home (`\\wsl.localhost\Ubuntu\home\lucid`)
-- **Projects**: `/home/lucid/projects/`
-- **Tools**: `/home/lucid/tools/`
-- **Hermes config**: `~/.hermes/config.yaml`
-- **Hermes skills**: `~/.hermes/skills/`
-- **Hermes sessions**: `~/.hermes/sessions/`
-- **Hermes services**: gateway (port 8642), dashboard (port 9119), workspace (port 3000)
-- **Cline (VSCode on Windows)** connects to the same WSL instance
-- **Windows host filesystem** at `/mnt/c/` etc.
+**OS**: WSL2 on Windows (Ubuntu)
+**Working dir**: `/home/lucid/` is the WSL home (`\\wsl.localhost\Ubuntu\home\lucid`)
+**Projects**: `/home/lucid/projects/`
+**Tools**: `/home/lucid/tools/`
+**Hermes config**: `~/.hermes/config.yaml`
+**Hermes skills**: `~/.hermes/skills/`
+**Hermes sessions**: `~/.hermes/sessions/`
+**Hermes services**: gateway (port 8642), dashboard (port 9119), workspace (port 3000)
+**Cline (VSCode on Windows)** connects to the same WSL instance
+**Windows host filesystem** at `/mnt/c/` etc.
 
 ---
 
 ## 4. Communication Channels
 
 **Telegram**:
-- Bot token: `8229408346:AAFu2s7vCeiF04Ig3f3ye2ZZU9iUJHuJzWs`
+- Bot token: `8229408346:***`
 - Mike's chat_id: `8550634232`
 - Send consolidated tight summaries. 1 proposal at a time.
+
+**Session Startup Flow (from AGENTS.md)**:
+1. Read `SOUL.md` — who you are
+2. Read `USER.md` — Mike's preferences
+3. Read `active/ACTIVE.md` — what's in progress
+4. Read `pending/PENDING.md` — items awaiting input
+5. Read `projects/PROJECTS.md` — full backlog
+
+**Internal memory** (`~/.hermes/memories/MEMORY.md`) is AUTO-INJECTED every session (currently 3839 chars, 48% of 8000 limit). Keep it lean.
 
 ---
 
 ## 5. Git & GitHub
 
-- **GitHub PAT**: saved at `/home/lucid/.env` (GITHUB_PAT, permissions 600)
-- **Auth command**: `git config --global credential.helper "/usr/bin/gh auth git-credential"`
-- **XO repo**: `https://github.com/Reperion/XO-2026`
-- **Sync script**: `/home/lucid/xo/sync.sh`
-- **Branch rule**: Mike's repos → feature branches only. XO-2026 → main is fine.
+**GitHub PAT**: saved at `/home/lucid/.env` (GITHUB_PAT, permissions 600)
+**Auth command**: `git config --global credential.helper "/usr/bin/gh auth git-credential"`
+**XO repo**: `https://github.com/Reperion/XO-2026`
+**Sync script**: `/home/lucid/xo/sync.sh`
+**Branch rule**: Mike's repos → feature branches only. XO-2026 → main is fine.
 
 ---
 
@@ -130,10 +139,79 @@ Always use the cheapest tool first:
 
 ## 7. Hermes Workspace & Dashboard
 
-**Hermes Workspace v2.0.0**: React SPA addon. Browser tools struggle with snapshotting — use curl for health checks:
-- workspace: `curl http://localhost:3000` (port 3000)
-- dashboard: `curl http://localhost:9119` (port 9119)
-- gateway: `curl http://localhost:8642/api/health` (port 8642)
+### Hermes Workspace (port 3000)
+**Type**: TanStack Start React SPA (client-side rendered)
+**API Endpoints**:
+- `GET /api/sessions` → Returns JSON list of all sessions (verified working, returns 200)
+- `GET /api/tools` → Returns HTML (SPA fallback, not a real API)
+- `GET /api/jobs` → Returns HTML (SPA fallback, not a real API)
+- WebSocket: `ws://localhost:3000/` (for real-time chat)
+
+**How XO Uses Workspace**:
+- Browser-driven interaction: `browser_navigate(url="http://localhost:3000/")` + `browser_snapshot()`
+- Limited API calls: `curl -s http://localhost:3000/api/sessions | jq 'length'`
+- Prototype skills, test workflows, update project board.
+
+### Hermes Dashboard (port 9119)
+**Type**: React SPA (bundled with Vite)
+**Version**: v0.12.0
+**Session Token**: `window.__HERMES_SESSION_TOKEN__` (for authenticated API calls)
+
+**Navigation** (from browser snapshot):
+- SESSIONS, ANALYTICS, MODELS, LOGS, CRON, SKILLS
+- PLUGINS: ACHIEVEMENTS, KANBAN, EXAMPLE
+- PROFILES : MULTI AGENTS, CONFIG, KEYS, DOCUMENTATION
+
+**How XO Uses Dashboard**:
+- Kanban Planning (Primary): `browser_navigate(url="http://localhost:9119/kanban")` or `hermes kanban list --json`
+- Monitor Cron Jobs: `browser_navigate(url="http://localhost:9119/cron")` or `hermes cronjob(action='list')`
+- Skill Management: `hermes skills list`
+- Session Monitoring: Check for errors, high token counts.
+
+### The "Todo-Something" Clarification
+You will hear "hermes todo" referenced in sessions. This refers to TWO separate things:
+
+1. **`todo` Tool (Session-Level)**:
+   - In-memory task list per session (see `tools/todo_tool.py`)
+   - Tool: `todo(todos=[...])` — manages task list for complex multi-step work
+   - Scope: One session only — does NOT persist across restarts
+   - Statuses: `pending`, `in_progress`, `completed`, `cancelled`
+   - Survives compression: Active items (pending/in_progress) re-injected after context compression
+
+2. **`hermes kanban` (Persistent Board)**:
+   - SQLite-backed task board shared across profiles (see `hermes kanban --help`)
+   - CLI: `hermes kanban create/list/show/assign/complete/block...`
+   - Scope: Persists forever in `~/.hermes/kanban/kanban.db`
+   - Columns: `backlog` → `todo` → `in_progress` → `review` → `done`
+   - KANBAN_PLAYBOOK: Read `/home/lucid/xo/docs/KANBAN_PLAYBOOK.md` for the full workflow
+
+**Note**: The KANBAN_PLAYBOOK references `hermes todo` CLI commands that do NOT exist (outdated docs). The actual command is `hermes kanban`.
+
+### Kanban-Driven Evolution Workflow
+Follow the KANBAN_PLAYBOOK (`/home/lucid/xo/docs/KANBAN_PLAYBOOK.md`):
+
+**Session Start (Every Wake)**:
+1. Read state: `read_file("/home/lucid/xo/active/ACTIVE.md")`
+2. Read memory: `read_file("/home/lucid/.hermes/memories/MEMORY.md")` (auto-injected, but re-read for clarity)
+3. Check board: `terminal("hermes kanban list")`
+
+**Choose Work (Priority Order)**:
+1. **Mike asked for it** — tasks with `created_by: user` or high priority
+2. **In-progress continuations** — things left at 80% completion
+3. **Strategic improvement** — tasks that make XO more useful to Mike
+4. **Exploration** — only if 1-3 are empty
+
+**Execute Work**:
+1. Move task to `in_progress`: `hermes kanban assign <id> xo`
+2. Do the actual work (code, research, test, build)
+3. When done: move to `review` or `done`
+4. Update `/home/lucid/xo/active/ACTIVE.md`
+
+**Report (End of Session)**:
+- Update kanban board state
+- Update ACTIVE.md with what was done
+- Send Mike a Telegram message if something meaningful happened
+- Git commit + push to XO-2026 repo
 
 **Known issues** (GitHub #145, #144, #143):
 - Chat messages disappear after send (session-store race condition)
@@ -144,7 +222,7 @@ Always use the cheapest tool first:
 - MCP Settings 404 (reads from gateway instead of dashboard)
 
 **Dashboard quirks**:
-- Patch artifacts (\\n escapes) → grep and write_file clean
+- Patch artifacts (`\\n` escapes) → grep and write_file clean
 - Debounce loops → useRef with no state deps
 - Server restarts: process kill + npm run dev background
 - Local-only: no deploy/Vercel unless instructed
@@ -192,6 +270,7 @@ Always use the cheapest tool first:
 - `xo-cron-manager` — monitor cron jobs
 - `xo-github-manager` — manage XO-2026 repo
 - `xo-proposal-system` — Telegram proposal workflow
+- `hermes-local-services` (NEW 2026-05-02) — Workspace + Dashboard usage, todo tool vs kanban, KANBAN_PLAYBOOK workflow. Load with `skill_view(name='hermes-local-services')`
 
 **Key skills for daily tasks**:
 - `delegate_task` — spawn subagents
@@ -205,6 +284,7 @@ Always use the cheapest tool first:
 **Recent additions**:
 - `yt-search` (media) — YouTube search + captions. Uses yt-dlp for search, youtube-transcript-api for captions. Falls back to yt-transcriber (Whisper) when no captions exist.
 - `video-message` (creative) — captioned video with TTS, Telegram delivery.
+- `hermes-local-services` (xo-core) — NEW. Workspace + Dashboard usage, todo tool vs kanban, KANBAN_PLAYBOOK.md workflow.
 
 ---
 
@@ -213,9 +293,9 @@ Always use the cheapest tool first:
 See `/home/lucid/xo/pending/PENDING.md` for full list.
 
 **High priority API keys needed**:
-- EXA API key
-- FIRECRAWL API key
-- BROWSERBASE API key
+- EXA_API_KEY
+- FIRECRAWL_API_KEY
+- BROWSERBASE_API_KEY
 
 **Brave Search**: Already configured. CLI at `/home/lucid/tools/brave-search`. Free tier: 2,000 queries/month. MCP server configured in Hermes config.yaml.
 
@@ -243,5 +323,15 @@ See `/home/lucid/xo/pending/PENDING.md` for full list.
 - Built 4 skills: xo-self-report, agent-research, xo-github-manager, weather-query
 - Pushed to GitHub autonomously, sent Telegram proactively
 
+**Hermes Local Services Skill** (2026-05-02):
+- Clarified "todo-something": todo tool (session) vs hermes kanban (persistent)
+- Documented Workspace (3000): `GET /api/sessions` returns 200 (JSON), others are SPA fallback
+- Mapped Dashboard (9119): Sessions, Analytics, Models, Logs, Cron, Skills, Kanban plugin, v0.12.0
+- KANBAN_PLAYBOOK.md: Found at `/home/lucid/xo/docs/KANBAN_PLAYBOOK.md` — references `hermes todo` CLI (doesn't exist, use `hermes kanban`)
+- Created skill at `~/.hermes/skills/xo-core/hermes-local-services/`
+- Kanban tasks T1-T4 completed via `hermes kanban complete`
+- Optimized internal memory to 3839 chars (48% of 8000 limit) — was 7153 chars (88%)
+
 ---
+
 *End of Memory Vault. Update this file when you learn durable facts. Session-specific logs go to memory/YYYY/MM/DD.md or nightly_reports/.*
