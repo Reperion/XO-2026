@@ -114,3 +114,26 @@ def test_render_planet_positions_at_distance():
     
     assert "position.x" in js_code or "position.z" in js_code
 
+
+def test_generate_html_page_includes_animation_loop():
+    """generate_html_page should include animation loop for planet rotation."""
+    from src.solar import generate_html_page
+    
+    planets = {"Earth": {"name": "Earth", "color": "#6B93D6"}}
+    
+    html = generate_html_page(planets)
+    
+    assert "function animate()" in html
+    assert "renderer.render" in html
+
+
+def test_generate_html_page_includes_orbit_controls():
+    """generate_html_page should include OrbitControls for camera."""
+    from src.solar import generate_html_page
+    
+    planets = {"Mars": {"name": "Mars", "color": "#FF0000"}}
+    
+    html = generate_html_page(planets)
+    
+    assert "OrbitControls" in html or "OrbitControls" in html.lower()
+

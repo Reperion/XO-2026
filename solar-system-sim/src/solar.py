@@ -119,6 +119,7 @@ def generate_html_page(planets):
 <body>
     <canvas id="solarCanvas"></canvas>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script>
         // Three.js solar system
         const scene = new THREE.Scene();
@@ -129,9 +130,14 @@ def generate_html_page(planets):
         // Add planets
 {planet_script}
         
+        // Camera controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        camera.position.set(0, 50, 100);
+        
         // Animation loop
         function animate() {{
             requestAnimationFrame(animate);
+            controls.update();
             renderer.render(scene, camera);
         }}
         animate();
