@@ -10,6 +10,7 @@
 | Skill | Status | Notes |
 |-------|--------|-------|
 | `xo-autonomous-operation` | ✅ | XO's self-management system — project board, pending items, autonomous execution |
+| `xo-proposal-system` | ✅ | Telegram proposal system with inline Approve/Reject buttons (upgraded 2026-05-03) |
 | `reliable-scheduled-communication` | ✅ | Cron scheduling workflow — used for all 6 self-waking jobs |
 | `systematic-debugging` | ✅ | Bug investigation protocol — 4-phase root cause |
 | `test-driven-development` | ✅ | RED-GREEN-REFACTOR cycle |
