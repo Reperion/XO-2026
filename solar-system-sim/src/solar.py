@@ -127,6 +127,20 @@ def generate_html_page(planets):
         const renderer = new THREE.WebGLRenderer({{ canvas: document.getElementById('solarCanvas') }});
         renderer.setSize(window.innerWidth, window.innerHeight);
         
+        // Create starfield background
+        const starGeometry = new THREE.BufferGeometry();
+        const starCount = 5000;
+        const starPositions = new Float32Array(starCount * 3);
+        for (let i = 0; i < starCount * 3; i += 3) {{
+            starPositions[i] = (Math.random() - 0.5) * 2000;
+            starPositions[i+1] = (Math.random() - 0.5) * 2000;
+            starPositions[i+2] = (Math.random() - 0.5) * 2000;
+        }}
+        starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        const starMaterial = new THREE.PointsMaterial({{ color: 0xFFFFFF, size: 0.7 }});
+        const stars = new THREE.Points(starGeometry, starMaterial);
+        scene.add(stars);
+        
         // Add planets
 {planet_script}
         

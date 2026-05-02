@@ -137,3 +137,28 @@ def test_generate_html_page_includes_orbit_controls():
     
     assert "OrbitControls" in html or "OrbitControls" in html.lower()
 
+
+def test_generate_html_page_includes_starfield():
+    """generate_html_page should include starfield background."""
+    from src.solar import generate_html_page
+    
+    planets = {"Earth": {"name": "Earth", "color": "#6B93D6"}}
+    
+    html = generate_html_page(planets)
+    
+    assert "star" in html.lower()
+    assert "geometry" in html.lower()  # Star geometry
+
+
+def test_generate_html_page_is_valid_html():
+    """generate_html_page should produce valid HTML with closing tags."""
+    from src.solar import generate_html_page
+    
+    planets = {}
+    
+    html = generate_html_page(planets)
+    
+    assert html.strip().endswith("</html>")
+    assert html.count("<html>") == 1
+    assert html.count("</html>") == 1
+
