@@ -1,0 +1,31 @@
+🔍 **Hermes Agent Daily Digest** - May 14, 2026
+
+📊 **Ecosystem Snapshot:**
+• GitHub: 139K+ stars (fastest-growing agent framework 2026)
+• OpenRouter: #1 daily app/agent (May 10, 2026)
+• Models: Ring-2.6-1T (free) → now testing Nemotron 120B
+
+📺 **Top Creators to Follow:**
+1. @nateherk - Full courses, VPS setup, Hermes + Hostinger deals
+2. @AlexFinnOfficial - Hermes + ChatGPT 5.5 combos, advanced use cases
+3. @JulianGoldieSEO - SEO automation, HyperFrames video SEO skill
+4. @Teknium - Step-by-step beginner guides, AI trends
+5. @gregisenberg - Hermes vs OpenClaw comparisons, managed AI biz
+
+💡 **Emerging Use Cases from Community:**
+• Multi-agent teams on single Telegram group chat
+• Local-first setups (LM Studio + Ollama + Qwen3.5)
+• Managed AI agent businesses (SaaS-like unlimited agents)
+• Desktop app adoption lowering technical barriers
+• Voice integration with Home Assistant (wake word → STT → Hermes → TTS)
+
+🎯 **Today's Key Insight:**
+The adjustable reasoning effort in Ring-2.6-1T (High/xHigh modes) lets agents dynamically allocate compute - thinking hard only when needed. This is perfect for autonomous agents that need to balance quick lookups with deep analysis.
+
+📹 **Video Research Status:**
+⚠️ Video transcript extraction temporarily limited (YouTube API changes)
+📝 Using compiled research from 20+ channels/accounts instead
+
+🔧 **Technical Note:** 
+Switched default model to nvidia/nemotron-3-super-120b-a12b:free (OpenRouter) as requested.
+Next digest: Tomorrow 18:00 CEST

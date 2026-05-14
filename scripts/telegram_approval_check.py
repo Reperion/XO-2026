@@ -131,12 +131,12 @@ def handle_callback_query(callback):
 def get_updates(last_update_id=0):
     """Fetch recent Telegram updates."""
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/getUpdates"
-    params = {"timeout": 30}
+    params = {"timeout": 0}  # Use 0 for testing (no long poll)
     if last_update_id > 0:
         params["offset"] = last_update_id + 1
     
     try:
-        resp = requests.get(url, params=params, timeout=35)
+        resp = requests.get(url, params=params, timeout=5)
         resp.raise_for_status()
         data = resp.json()
         if data.get('ok'):
